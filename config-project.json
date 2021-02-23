@@ -1,0 +1,11 @@
+{
+  "variableSets" : {
+    "default" : { }
+  },
+  "variableXpaths" : { },
+  "uidInXincludeCompntListFileName" : false,
+  "xincludeXpaths" : { },
+  "additionalFiles" : { },
+  "optionalComponentsInUse" : [ "com.adaptris:interlok-pgp:4.0-SNAPSHOT" ],
+  "structured" : true
+}

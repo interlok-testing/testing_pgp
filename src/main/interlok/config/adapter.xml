@@ -1,0 +1,262 @@
+<adapter>
+  <unique-id>localhost</unique-id>
+  <start-up-event-imp>com.adaptris.core.event.StandardAdapterStartUpEvent</start-up-event-imp>
+  <heartbeat-event-imp>com.adaptris.core.HeartbeatEvent</heartbeat-event-imp>
+  <shared-components>
+    <connections/>
+    <services/>
+  </shared-components>
+  <event-handler class="default-event-handler">
+    <unique-id>DefaultEventHandler</unique-id>
+    <connection class="null-connection">
+      <unique-id>desperate-panini</unique-id>
+    </connection>
+    <producer class="null-message-producer">
+      <unique-id>goofy-shirley</unique-id>
+    </producer>
+  </event-handler>
+  <message-error-handler class="null-processing-exception-handler">
+    <unique-id>cocky-bose</unique-id>
+  </message-error-handler>
+  <failed-message-retrier class="no-retries">
+    <unique-id>furious-hamilton</unique-id>
+  </failed-message-retrier>
+  <channel-list>
+    <channel>
+      <consume-connection class="null-connection">
+        <unique-id>null-consume-connection</unique-id>
+      </consume-connection>
+      <produce-connection class="null-connection">
+        <unique-id>null-produce-connection</unique-id>
+      </produce-connection>
+      <workflow-list>
+        <standard-workflow>
+          <consumer class="fs-consumer">
+            <unique-id>encrypt-fs-consumer</unique-id>
+            <poller class="fixed-interval-poller">
+              <poll-interval>
+                <unit>SECONDS</unit>
+                <interval>5</interval>
+              </poll-interval>
+            </poller>
+            <create-dirs>true</create-dirs>
+            <file-sorter class="fs-sort-none"/>
+            <base-directory-url>./messages/encrypt-in</base-directory-url>
+            <wip-suffix>.wip</wip-suffix>
+          </consumer>
+          <service-collection class="service-list">
+            <unique-id>hungry-ardinghelli</unique-id>
+            <services>
+              <pgp-encrypt>
+                <unique-id>pgp-encrypt-service</unique-id>
+                <public-key class="file-input-stream-data-input-parameter">
+                  <destination class="configured-destination">
+                    <destination>./testkey.asc.pub</destination>
+                  </destination>
+                </public-key>
+                <clear-text class="stream-payload-input-parameter"/>
+                <cipher-text class="stream-payload-output-parameter"/>
+                <armor-encoding>true</armor-encoding>
+                <integrity-check>true</integrity-check>
+              </pgp-encrypt>
+            </services>
+          </service-collection>
+          <producer class="fs-producer">
+            <unique-id>encrypt-fs-producer</unique-id>
+            <create-dirs>true</create-dirs>
+            <fs-worker class="fs-nio-worker"/>
+            <filename-creator class="formatted-filename-creator">
+              <filename-format>%1$s</filename-format>
+            </filename-creator>
+            <base-directory-url>./messages/decrypt-in</base-directory-url>
+          </producer>
+          <produce-exception-handler class="null-produce-exception-handler"/>
+          <unique-id>pgp-encrypt-workflow</unique-id>
+          <message-metrics-interceptor>
+            <unique-id>pgp-encrypt-workflow-MessageMetrics</unique-id>
+            <timeslice-duration>
+              <unit>MINUTES</unit>
+              <interval>5</interval>
+            </timeslice-duration>
+            <timeslice-history-count>12</timeslice-history-count>
+          </message-metrics-interceptor>
+          <in-flight-workflow-interceptor>
+            <unique-id>pgp-encrypt-workflow-InFlight</unique-id>
+          </in-flight-workflow-interceptor>
+        </standard-workflow>
+        <standard-workflow>
+          <consumer class="fs-consumer">
+            <unique-id>decrypt-fs-consumer</unique-id>
+            <poller class="fixed-interval-poller">
+              <poll-interval>
+                <unit>SECONDS</unit>
+                <interval>5</interval>
+              </poll-interval>
+            </poller>
+            <create-dirs>true</create-dirs>
+            <file-sorter class="fs-sort-none"/>
+            <base-directory-url>./messages/decrypt-in</base-directory-url>
+            <wip-suffix>.wip</wip-suffix>
+          </consumer>
+          <service-collection class="service-list">
+            <unique-id>big-shannon</unique-id>
+            <services>
+              <pgp-decrypt>
+                <unique-id>decrypt-service</unique-id>
+                <private-key class="file-input-stream-data-input-parameter">
+                  <destination class="configured-destination">
+                    <destination>./testkey.asc</destination>
+                  </destination>
+                </private-key>
+                <passphrase class="constant-data-input-parameter">
+                  <value>testkey</value>
+                </passphrase>
+                <cipher-text class="stream-payload-input-parameter"/>
+                <clear-text class="stream-payload-output-parameter"/>
+              </pgp-decrypt>
+            </services>
+          </service-collection>
+          <producer class="fs-producer">
+            <unique-id>decrypt-fs-producer</unique-id>
+            <create-dirs>true</create-dirs>
+            <fs-worker class="fs-nio-worker"/>
+            <filename-creator class="formatted-filename-creator">
+              <filename-format>%1$s</filename-format>
+            </filename-creator>
+            <base-directory-url>./messages/decrypt-out</base-directory-url>
+          </producer>
+          <produce-exception-handler class="null-produce-exception-handler"/>
+          <unique-id>pgp-decrypt-workflow</unique-id>
+          <message-metrics-interceptor>
+            <unique-id>pgp-decrypt-workflow-MessageMetrics</unique-id>
+            <timeslice-duration>
+              <unit>MINUTES</unit>
+              <interval>5</interval>
+            </timeslice-duration>
+            <timeslice-history-count>12</timeslice-history-count>
+          </message-metrics-interceptor>
+          <in-flight-workflow-interceptor>
+            <unique-id>pgp-decrypt-workflow-InFlight</unique-id>
+          </in-flight-workflow-interceptor>
+        </standard-workflow>
+        <standard-workflow>
+          <consumer class="fs-consumer">
+            <unique-id>sign-fs-consumer</unique-id>
+            <poller class="fixed-interval-poller">
+              <poll-interval>
+                <unit>SECONDS</unit>
+                <interval>5</interval>
+              </poll-interval>
+            </poller>
+            <create-dirs>true</create-dirs>
+            <file-sorter class="fs-sort-none"/>
+            <base-directory-url>./messages/sign-in</base-directory-url>
+            <wip-suffix>.wip</wip-suffix>
+          </consumer>
+          <service-collection class="service-list">
+            <unique-id>loving-morse</unique-id>
+            <services>
+              <pgp-sign>
+                <unique-id>sign-service</unique-id>
+                <private-key class="file-input-stream-data-input-parameter">
+                  <destination class="configured-destination">
+                    <destination>./testkey.asc</destination>
+                  </destination>
+                </private-key>
+                <passphrase class="constant-data-input-parameter">
+                  <value>testkey</value>
+                </passphrase>
+                <clear-text class="stream-payload-input-parameter"/>
+                <armor-encoding>true</armor-encoding>
+                <detached-signature>false</detached-signature>
+                <signature class="stream-payload-output-parameter"/>
+              </pgp-sign>
+            </services>
+          </service-collection>
+          <producer class="fs-producer">
+            <unique-id>sign-fs-producer</unique-id>
+            <create-dirs>true</create-dirs>
+            <fs-worker class="fs-nio-worker"/>
+            <filename-creator class="formatted-filename-creator">
+              <filename-format>%1$s</filename-format>
+            </filename-creator>
+            <base-directory-url>./messages/verify-in</base-directory-url>
+          </producer>
+          <produce-exception-handler class="null-produce-exception-handler"/>
+          <unique-id>pgp-sign-workflow</unique-id>
+          <message-metrics-interceptor>
+            <unique-id>pgp-sign-workflow-MessageMetrics</unique-id>
+            <timeslice-duration>
+              <unit>MINUTES</unit>
+              <interval>5</interval>
+            </timeslice-duration>
+            <timeslice-history-count>12</timeslice-history-count>
+          </message-metrics-interceptor>
+          <in-flight-workflow-interceptor>
+            <unique-id>pgp-sign-workflow-InFlight</unique-id>
+          </in-flight-workflow-interceptor>
+        </standard-workflow>
+        <standard-workflow>
+          <consumer class="fs-consumer">
+            <unique-id>verify-fs-consumer</unique-id>
+            <poller class="fixed-interval-poller">
+              <poll-interval>
+                <unit>SECONDS</unit>
+                <interval>5</interval>
+              </poll-interval>
+            </poller>
+            <create-dirs>true</create-dirs>
+            <file-sorter class="fs-sort-none"/>
+            <base-directory-url>./messages/verify-in</base-directory-url>
+            <wip-suffix>.wip</wip-suffix>
+          </consumer>
+          <service-collection class="service-list">
+            <unique-id>berserk-mclean</unique-id>
+            <services>
+              <pgp-verify>
+                <unique-id>verify-service</unique-id>
+                <public-key class="file-input-stream-data-input-parameter">
+                  <destination class="configured-destination">
+                    <destination>./testkey.asc.pub</destination>
+                  </destination>
+                </public-key>
+                <signed-message class="stream-payload-input-parameter"/>
+                <signature class="metadata-stream-input-parameter">
+                  <metadata-key>null-sig-is-inline</metadata-key>
+                </signature>
+                <original-message class="stream-payload-output-parameter"/>
+              </pgp-verify>
+            </services>
+          </service-collection>
+          <producer class="fs-producer">
+            <unique-id>verifyfs-producer</unique-id>
+            <create-dirs>true</create-dirs>
+            <fs-worker class="fs-nio-worker"/>
+            <filename-creator class="formatted-filename-creator">
+              <filename-format>%1$s</filename-format>
+            </filename-creator>
+            <base-directory-url>./messages/verify-out</base-directory-url>
+          </producer>
+          <produce-exception-handler class="null-produce-exception-handler"/>
+          <unique-id>pgp-verify-workflow</unique-id>
+          <message-metrics-interceptor>
+            <unique-id>pgp-verify-workflow-MessageMetrics</unique-id>
+            <timeslice-duration>
+              <unit>MINUTES</unit>
+              <interval>5</interval>
+            </timeslice-duration>
+            <timeslice-history-count>12</timeslice-history-count>
+          </message-metrics-interceptor>
+          <in-flight-workflow-interceptor>
+            <unique-id>pgp-verify-workflow-InFlight</unique-id>
+          </in-flight-workflow-interceptor>
+        </standard-workflow>
+      </workflow-list>
+      <unique-id>pgp-test-channel</unique-id>
+    </channel>
+  </channel-list>
+  <message-error-digester class="standard-message-error-digester">
+    <unique-id>ErrorDigest</unique-id>
+    <digest-max-size>100</digest-max-size>
+  </message-error-digester>
+</adapter>
