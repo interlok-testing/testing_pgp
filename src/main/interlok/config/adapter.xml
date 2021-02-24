@@ -221,9 +221,6 @@
                   </destination>
                 </public-key>
                 <signed-message class="stream-payload-input-parameter"/>
-                <signature class="metadata-stream-input-parameter">
-                  <metadata-key>null-sig-is-inline</metadata-key>
-                </signature>
                 <original-message class="stream-payload-output-parameter"/>
               </pgp-verify>
             </services>
