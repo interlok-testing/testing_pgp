@@ -1,0 +1,170 @@
+<service-test>
+  <unique-id>prickly-bell</unique-id>
+  <test-client class="local-jmx-test-client"/>
+  <helpers/>
+  <test-list>
+    <unique-id>pgp-encrypt-workflow@pgp-test-channel</unique-id>
+    <test>
+      <unique-id>pgp-encrypt-service</unique-id>
+      <test-case>
+        <unique-id>pgp-encrypt-test</unique-id>
+        <input-message-provider>
+          <metadata-provider class="empty-metadata-provider"/>
+          <payload-provider class="inline-payload-provider">
+            <payload><![CDATA[Bacon ipsum dolor amet burgdoggen chicken turkey short ribs. Chicken short loin frankfurter venison tri-tip, meatball shoulder rump. Tongue porchetta boudin pancetta. Doner meatloaf shoulder flank frankfurter sirloin. Tenderloin flank shoulder kielbasa drumstick cupim buffalo alcatra. Tail venison fatback meatball, corned beef meatloaf jowl tongue beef ribs pork chop sausage.]]></payload>
+          </payload-provider>
+        </input-message-provider>
+        <assertions>
+          <assert-payload-contains>
+            <payload><![CDATA[-----BEGIN PGP MESSAGE-----]]></payload>
+          </assert-payload-contains>
+        </assertions>
+      </test-case>
+      <service-to-test>
+        <source class="file-source">
+          <file>file:///${service.tester.working.directory}/config/adapter.xml</file>
+        </source>
+        <preprocessors>
+          <service-unique-id-preprocessor>
+            <channel>pgp-test-channel</channel>
+            <workflow>pgp-encrypt-workflow</workflow>
+            <service>pgp-encrypt-service</service>
+          </service-unique-id-preprocessor>
+        </preprocessors>
+      </service-to-test>
+    </test>
+  </test-list>
+  <test-list>
+    <unique-id>pgp-decrypt-workflow@pgp-test-channel</unique-id>
+    <test>
+      <unique-id>decrypt-service</unique-id>
+      <test-case>
+        <unique-id>pgp-decrypt-test</unique-id>
+        <input-message-provider>
+          <metadata-provider class="empty-metadata-provider"/>
+          <payload-provider class="inline-payload-provider">
+            <payload><![CDATA[-----BEGIN PGP MESSAGE-----
+Version: BCPG v1.68
+
+hQEMAwfQ055lYf7dAQgAicm9lJeGnSYNDTWrgccnEjGn0Q4jMGlJIABNUr/A7vti
+T54Dt/MJR9qsZICAE5pMDqnaSicGuuY/3VXwDrj2a7R+WOPq4GcZtlzQ6RJ1tJrb
+l7bkUM6IdIVsnOJF5rlfpdcxHb5LW1tgoUNIS36tAJEtBbZ4Z57i6eB7z7KX0zir
+EZW83nRsOyD426Y1qPdUz+K3l7elregtzPHY1AzrHyLcecxZU9kM99xjHbVxIpWx
+0M7QIPVgbFYgQVhxkd15QJo0fi0tLJupCitkqtZjH9/sZj0hUUxOzt19FIgXoppa
+hvkOFSW0P9OrcdVeso5rHMAea4Sl6CrffU1djwhMY9LA2QEvxQEWNh3Y44LTxzX0
+0atvDzPCqYkGxfVGB/2KFNMIztem/PbdKWIzXyIN0YtDUftii2CjW+krFAIDvHRp
+nK76w7t2kFzbK5jbO6KWNEwE/M/xnXidzWICl72kolcBubtLaEAnVepKkGDa+xn/
+omz+xN6nMJsU8fbCc9uHCuKTMQfGI99weYPvE/TccbXQuwIO2HxeTfHXYadwljf+
+rCF8Lor5ZxEIGhkkKSbvZY3rPZ8JJ5/L+inWxMVqQZM18L2el1NxPb5vTyx7lmhK
+dsuG4AJUWsVYEsiWIAsfE89rGs0TCO2x0edh5VwfiWCe3rlOPlfN5aUlR1KqVok9
+n2X9rqMMxUUb/6u/8HFU79B7ZRl2+Pkd0aw5ULAOXKgzNEqlR3+tbNQo6x/ReLl3
+zW7pZEo4c4xIQmIFaAlnWoPFmNLfdIqylzOMfwvM3VWLs0LE3Nnwo7wUtuIuXH0Y
+fv5IZDj9SUHgTAd7+vG94Alb1SYv6WOGQMoEScJ4wN6up6vbuHvnBWogFpyjddOG
+jVYphGLexAuVtx0=
+=BxBu
+-----END PGP MESSAGE-----]]></payload>
+          </payload-provider>
+        </input-message-provider>
+        <assertions>
+          <assert-line-payload-equals>
+            <line>Bacon ipsum dolor amet ground round spare ribs fatback ham hock. Kevin pig tongue alcatra landjaeger brisket salami boudin. Chislic alcatra leberkas, drumstick shoulder beef chicken pork cow tail turducken tongue tri-tip filet mignon. Shank prosciutto pork belly, ribeye landjaeger picanha ground round frankfurter pig pastrami t-bone. Frankfurter capicola drumstick, shankle sirloin meatball hamburger meatloaf spare ribs pancetta turkey corned beef tenderloin t-bone. Jowl capicola tongue ribeye jerky brisket cupim salami short loin filet mignon beef spare ribs fatback.</line>
+          </assert-line-payload-equals>
+        </assertions>
+      </test-case>
+      <service-to-test>
+        <source class="file-source">
+          <file>file:///${service.tester.working.directory}/config/adapter.xml</file>
+        </source>
+        <preprocessors>
+          <service-unique-id-preprocessor>
+            <channel>pgp-test-channel</channel>
+            <workflow>pgp-decrypt-workflow</workflow>
+            <service>decrypt-service</service>
+          </service-unique-id-preprocessor>
+        </preprocessors>
+      </service-to-test>
+    </test>
+  </test-list>
+  <test-list>
+    <unique-id>pgp-sign-workflow@pgp-test-channel</unique-id>
+    <test>
+      <unique-id>sign-service</unique-id>
+      <test-case>
+        <unique-id>pgp-sign-test</unique-id>
+        <input-message-provider>
+          <metadata-provider class="empty-metadata-provider"/>
+          <payload-provider class="inline-payload-provider">
+            <payload><![CDATA[Bacon ipsum dolor amet buffalo picanha drumstick strip steak pastrami, chislic kielbasa cow kevin rump ham swine. Chuck sausage pork loin chicken shoulder buffalo filet mignon short loin ham beef ribs fatback. Tenderloin burgdoggen pastrami shank venison, prosciutto strip steak tail porchetta doner bresaola rump. Meatloaf shank landjaeger, t-bone ground round picanha meatball short ribs shankle tail ribeye salami. Doner pork belly boudin fatback, ball tip jowl pork chop ham turkey chuck chicken. Shankle fatback chislic, chuck pig landjaeger andouille jowl ball tip hamburger strip steak. Strip steak cupim venison meatloaf ham hock frankfurter tongue jowl pancetta buffalo meatball shank rump porchetta.]]></payload>
+          </payload-provider>
+        </input-message-provider>
+        <assertions>
+          <assert-payload-contains>
+            <payload><![CDATA[-----BEGIN PGP SIGNED MESSAGE-----]]></payload>
+          </assert-payload-contains>
+          <assert-payload-contains>
+            <payload><![CDATA[Bacon ipsum dolor amet buffalo picanha drumstick strip steak pastrami, chislic kielbasa cow kevin rump ham swine. Chuck sausage pork loin chicken shoulder buffalo filet mignon short loin ham beef ribs fatback. Tenderloin burgdoggen pastrami shank venison, prosciutto strip steak tail porchetta doner bresaola rump. Meatloaf shank landjaeger, t-bone ground round picanha meatball short ribs shankle tail ribeye salami. Doner pork belly boudin fatback, ball tip jowl pork chop ham turkey chuck chicken. Shankle fatback chislic, chuck pig landjaeger andouille jowl ball tip hamburger strip steak. Strip steak cupim venison meatloaf ham hock frankfurter tongue jowl pancetta buffalo meatball shank rump porchetta.]]></payload>
+          </assert-payload-contains>
+        </assertions>
+      </test-case>
+      <service-to-test>
+        <source class="file-source">
+          <file>file:///${service.tester.working.directory}/config/adapter.xml</file>
+        </source>
+        <preprocessors>
+          <service-unique-id-preprocessor>
+            <channel>pgp-test-channel</channel>
+            <workflow>pgp-sign-workflow</workflow>
+            <service>sign-service</service>
+          </service-unique-id-preprocessor>
+        </preprocessors>
+      </service-to-test>
+    </test>
+  </test-list>
+  <test-list>
+    <unique-id>pgp-verify-workflow@pgp-test-channel</unique-id>
+    <test>
+      <unique-id>verify-service</unique-id>
+      <test-case>
+        <unique-id>pgp-verify-test</unique-id>
+        <input-message-provider>
+          <metadata-provider class="empty-metadata-provider"/>
+          <payload-provider class="inline-payload-provider">
+            <payload><![CDATA[-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Bacon ipsum dolor amet tenderloin corned beef ribeye pork chop ground round bacon frankfurter pastrami. Picanha leberkas tail venison chicken brisket capicola spare ribs chislic. Prosciutto pork chop bresaola t-bone doner, venison hamburger swine burgdoggen flank strip steak. Meatloaf salami venison short ribs. Pig andouille alcatra leberkas fatback pork, prosciutto beef ribs chicken. Prosciutto tri-tip spare ribs alcatra rump ham venison, drumstick kevin.
+-----BEGIN PGP SIGNATURE-----
+Version: BCPG v1.68
+
+iQFBBAEBCAArBQJgPiNFJBxUZXN0IEtleSA8ZGV2ZWxvcG1lbnRAYWRhcHRyaXMu
+bmV0PgAKCRAH0NOeZWH+3ZjOCACOi52FdCNXfuGzgTJaKJyV6HtgtcILKqQZ6y6j
+MoZPBecmeJMU5kT2U1GC2aK8xw08DAVXWpsNdF+xzU8K8N9QpVQs0K2nZ6f2B0PM
+jBwDZoM8LHGAF0LKtxAPg5H3OEqPC8xiBO3fQFsCA4WbmZ8K30mFx4o4dNWPBX9b
+qAYyOOWSfswUhDv2Sz3XfbX3F5khMqT5KHimMcVIZSF34VGM2gZETUJeUWCR0dPs
+25/Z/pg9tFyantPMY4qYlhLOma2gHrpjqUd98MQdtkttSrJ94HfyWkQNwJKa51GV
+Rcrq0wOVGZMIQcDPoUlO4netPmQ/lEDKdfmOdsO+GEXBMtF1
+=dzCx
+-----END PGP SIGNATURE-----]]></payload>
+          </payload-provider>
+        </input-message-provider>
+        <assertions>
+          <assert-line-payload-equals>
+            <line>Bacon ipsum dolor amet tenderloin corned beef ribeye pork chop ground round bacon frankfurter pastrami. Picanha leberkas tail venison chicken brisket capicola spare ribs chislic. Prosciutto pork chop bresaola t-bone doner, venison hamburger swine burgdoggen flank strip steak. Meatloaf salami venison short ribs. Pig andouille alcatra leberkas fatback pork, prosciutto beef ribs chicken. Prosciutto tri-tip spare ribs alcatra rump ham venison, drumstick kevin.</line>
+          </assert-line-payload-equals>
+        </assertions>
+      </test-case>
+      <service-to-test>
+        <source class="file-source">
+          <file>file:///${service.tester.working.directory}/config/adapter.xml</file>
+        </source>
+        <preprocessors>
+          <service-unique-id-preprocessor>
+            <channel>pgp-test-channel</channel>
+            <workflow>pgp-verify-workflow</workflow>
+            <service>verify-service</service>
+          </service-unique-id-preprocessor>
+        </preprocessors>
+      </service-to-test>
+    </test>
+  </test-list>
+</service-test>
