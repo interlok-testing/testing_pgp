@@ -70,7 +70,6 @@
             </filename-creator>
             <base-directory-url>./messages/decrypt-in</base-directory-url>
           </producer>
-          <produce-exception-handler class="null-produce-exception-handler"/>
           <unique-id>pgp-encrypt-workflow</unique-id>
           <message-metrics-interceptor>
             <unique-id>pgp-encrypt-workflow-MessageMetrics</unique-id>
@@ -125,7 +124,6 @@
             </filename-creator>
             <base-directory-url>./messages/decrypt-out</base-directory-url>
           </producer>
-          <produce-exception-handler class="null-produce-exception-handler"/>
           <unique-id>pgp-decrypt-workflow</unique-id>
           <message-metrics-interceptor>
             <unique-id>pgp-decrypt-workflow-MessageMetrics</unique-id>
@@ -182,7 +180,6 @@
             </filename-creator>
             <base-directory-url>./messages/verify-in</base-directory-url>
           </producer>
-          <produce-exception-handler class="null-produce-exception-handler"/>
           <unique-id>pgp-sign-workflow</unique-id>
           <message-metrics-interceptor>
             <unique-id>pgp-sign-workflow-MessageMetrics</unique-id>
@@ -234,7 +231,6 @@
             </filename-creator>
             <base-directory-url>./messages/verify-out</base-directory-url>
           </producer>
-          <produce-exception-handler class="null-produce-exception-handler"/>
           <unique-id>pgp-verify-workflow</unique-id>
           <message-metrics-interceptor>
             <unique-id>pgp-verify-workflow-MessageMetrics</unique-id>

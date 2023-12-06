@@ -23,5 +23,4 @@ dependencies {
 
   interlokJavadocs group: "com.adaptris", name: "interlok-pgp", version: "$interlokVersion", classifier: "javadoc", changing: true, transitive: false
   interlokJavadocs group: "com.adaptris", name: "interlok-service-tester", version: "$interlokVersion", classifier: "javadoc", changing: true, transitive: false
-
 }

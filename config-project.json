@@ -5,7 +5,10 @@
   "variableXpaths" : { },
   "uidInXincludeCompntListFileName" : false,
   "xincludeXpaths" : { },
-  "additionalFiles" : { },
-  "optionalComponentsInUse" : [ "com.adaptris:interlok-pgp:4.0-SNAPSHOT" ],
+  "additionalFiles" : {
+    "log4j2.xml" : "log4j2.xml",
+    "bootstrap.properties" : "bootstrap.properties"
+  },
+  "optionalComponentsInUse" : [ "com.adaptris:interlok-pgp:5.0-SNAPSHOT" ],
   "structured" : true
 }
