@@ -9,6 +9,51 @@ This project tests interlok-pgp features.
 
 This project contains various workflows that each demonstrates an interlok-pgp service.
 
+```mermaid
+graph LR
+  subgraph PGP Encrypt
+    direction LR
+    FS11[File System] --> FS_C1(FS Consumer)
+    FS_C1 --> SE(PGP Encrypt)
+    SE --> FS_P1(FS Producer)
+    FS_P1 --> FS12[File System]
+  end
+  subgraph PGP Decrypt
+    direction LR
+    FS21[File System] --> FS_C2(FS Consumer)
+    FS_C2 --> SD(PGP Decrypt)
+    SD --> FS_P2(FS Producer)
+    FS_P2 --> FS22[File System]
+  end
+  subgraph PGP Sign
+    direction LR
+    FS31[File System] --> FS_C3(FS Consumer)
+    FS_C3 --> SS(PGP Sign)
+    SS --> FS_P3(FS Producer)
+    FS_P3 --> FS32[File System]
+  end
+  subgraph PGP Verify
+    direction LR
+    FS41[File System] --> FS_C4(FS Consumer)
+    FS_C4 --> SV(PGP Verify)
+    SV --> FS_P4(FS Producer)
+    FS_P4 --> FS42[File System]
+  end
+
+  style FS_C1 fill:#FF6C6C
+  style FS_C2 fill:#FF6C6C
+  style FS_C3 fill:#FF6C6C
+  style FS_C4 fill:#FF6C6C
+  style FS_P1 fill:#6C79FF
+  style FS_P2 fill:#6C79FF
+  style FS_P3 fill:#6C79FF
+  style FS_P4 fill:#6C79FF
+  style SE fill: #F89347
+  style SD fill: #F89347
+  style SS fill: #F89347
+  style SV fill: #F89347
+```
+
 Each workflow is made up of:
 
 * A fs-consumer polling a given directory every 5 seconds
