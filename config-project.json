@@ -2,7 +2,12 @@
   "variableSets" : {
     "default" : { }
   },
-  "variableXpaths" : { },
+  "variableXpaths" : {
+    "/adapter/channel-list/channel[unique-id=\"pgp-test-channel\"]/workflow-list/standard-workflow[unique-id=\"pgp-encrypt-workflow\"]/service-collection/services/pgp-encrypt[unique-id=\"pgp-encrypt-service\"]/public-key/url" : "${keyBaseDir}/testkey.asc.pub",
+    "/adapter/channel-list/channel[unique-id=\"pgp-test-channel\"]/workflow-list/standard-workflow[unique-id=\"pgp-decrypt-workflow\"]/service-collection/services/pgp-decrypt[unique-id=\"decrypt-service\"]/private-key/url" : "${keyBaseDir}/testkey.asc",
+    "/adapter/channel-list/channel[unique-id=\"pgp-test-channel\"]/workflow-list/standard-workflow[unique-id=\"pgp-sign-workflow\"]/service-collection/services/pgp-sign[unique-id=\"sign-service\"]/private-key/url" : "${keyBaseDir}/testkey.asc",
+    "/adapter/channel-list/channel[unique-id=\"pgp-test-channel\"]/workflow-list/standard-workflow[unique-id=\"pgp-verify-workflow\"]/service-collection/services/pgp-verify[unique-id=\"verify-service\"]/public-key/url" : "${keyBaseDir}/testkey.asc.pub"
+  },
   "uidInXincludeCompntListFileName" : false,
   "xincludeXpaths" : { },
   "additionalFiles" : {

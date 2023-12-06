@@ -1,5 +1,5 @@
 <adapter>
-  <unique-id>localhost</unique-id>
+  <unique-id>pgp</unique-id>
   <start-up-event-imp>com.adaptris.core.event.StandardAdapterStartUpEvent</start-up-event-imp>
   <heartbeat-event-imp>com.adaptris.core.HeartbeatEvent</heartbeat-event-imp>
   <shared-components>
@@ -50,9 +50,7 @@
               <pgp-encrypt>
                 <unique-id>pgp-encrypt-service</unique-id>
                 <public-key class="file-input-stream-data-input-parameter">
-                  <destination class="configured-destination">
-                    <destination>./testkey.asc.pub</destination>
-                  </destination>
+                  <url>${keyBaseDir}/testkey.asc.pub</url>
                 </public-key>
                 <clear-text class="stream-payload-input-parameter"/>
                 <cipher-text class="stream-payload-output-parameter"/>
@@ -103,12 +101,10 @@
               <pgp-decrypt>
                 <unique-id>decrypt-service</unique-id>
                 <private-key class="file-input-stream-data-input-parameter">
-                  <destination class="configured-destination">
-                    <destination>./testkey.asc</destination>
-                  </destination>
+                  <url>${keyBaseDir}/testkey.asc</url>
                 </private-key>
                 <passphrase class="constant-data-input-parameter">
-                  <value>testkey</value>
+                  <value>passphrase</value>
                 </passphrase>
                 <cipher-text class="stream-payload-input-parameter"/>
                 <clear-text class="stream-payload-output-parameter"/>
@@ -157,12 +153,10 @@
               <pgp-sign>
                 <unique-id>sign-service</unique-id>
                 <private-key class="file-input-stream-data-input-parameter">
-                  <destination class="configured-destination">
-                    <destination>./testkey.asc</destination>
-                  </destination>
+                  <url>${keyBaseDir}/testkey.asc</url>
                 </private-key>
                 <passphrase class="constant-data-input-parameter">
-                  <value>testkey</value>
+                  <value>passphrase</value>
                 </passphrase>
                 <clear-text class="stream-payload-input-parameter"/>
                 <armor-encoding>true</armor-encoding>
@@ -213,9 +207,7 @@
               <pgp-verify>
                 <unique-id>verify-service</unique-id>
                 <public-key class="file-input-stream-data-input-parameter">
-                  <destination class="configured-destination">
-                    <destination>./testkey.asc.pub</destination>
-                  </destination>
+                  <url>${keyBaseDir}/testkey.asc.pub</url>
                 </public-key>
                 <signed-message class="stream-payload-input-parameter"/>
                 <original-message class="stream-payload-output-parameter"/>
