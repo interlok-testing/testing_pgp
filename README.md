@@ -1,5 +1,8 @@
 # PGP Testing
 
+[![license](https://img.shields.io/github/license/interlok-testing/testing_pgp.svg)](https://github.com/interlok-testing/testing_pgp/blob/develop/LICENSE)
+[![Actions Status](https://github.com/interlok-testing/testing_pgp/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/interlok-testing/testing_pgp/actions/workflows/gradle-build.yml)
+
 This project tests interlok-pgp features.
 
 ## What it does
